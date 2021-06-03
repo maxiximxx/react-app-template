@@ -5,7 +5,9 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config ./scripts/dev.js",
-    "build": "cross-env NODE_ENV=production webpack --config ./scripts/build.js"
+    "build": "cross-env NODE_ENV=production webpack --config ./scripts/build.js",
+    "lint": "lint-staged",
+    "prepare": "husky install"
   },
   "keywords": [
     "react",
@@ -21,6 +23,7 @@
     "@reduxjs/toolkit": "^1.5.1",
     "axios": "^0.21.1",
     "core-js": "^3.11.0",
+    "lint-staged": "^11.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
@@ -44,6 +47,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-webpack-plugin": "^2.5.4",
     "html-webpack-plugin": "^5.3.1",
+    "husky": "^6.0.0",
     "mini-css-extract-plugin": "^1.5.0",
     "postcss-loader": "^5.2.0",
     "postcss-preset-env": "^6.7.0",
@@ -57,6 +61,12 @@
     "webpack-dev-server": "^4.0.0-beta.3",
     "webpack-merge": "^5.7.3",
     "webpackbar": "^5.0.0-3"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "browserslist": [
     ">0.2%",
