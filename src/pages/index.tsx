@@ -1,11 +1,12 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { increment } from '../store/count'
 import logo from '../assets/images/logo.svg'
 import style from './index.styl'
+import { useAppSelector } from '../store/hook'
 
 function Index() {
-  const count = useSelector((state) => state.count)
+  const count = useAppSelector((state) => state.count)
   const dispatch = useDispatch()
   const data = {
     title: 'react app template',

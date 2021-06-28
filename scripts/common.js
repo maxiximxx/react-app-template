@@ -3,6 +3,7 @@ const WebpackBar = require('webpackbar')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ESLintPlugin = require('eslint-webpack-plugin')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 
 const { PROJECT_PATH } = require('./config')
@@ -50,7 +51,7 @@ const getCssLoaders = () => {
 
 module.exports = {
   entry: {
-    main: './src/main.js',
+    main: './src/main.tsx',
   },
   output: {
     path: path.resolve(PROJECT_PATH, './app'),
@@ -58,7 +59,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(tsx?|js?)$/,
         exclude: /node_modules/,
         use: [
           {
@@ -104,14 +105,24 @@ module.exports = {
       ],
     }),
     new ESLintPlugin({
-      extensions: ['js', 'jsx'],
+      extensions: ['tsx', 'ts', 'js'],
+    }),
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        configFile: path.resolve(PROJECT_PATH, './tsconfig.json'),
+        diagnosticOptions: {
+          semantic: true,
+          syntactic: true,
+        },
+        mode: 'write-references',
+      },
     }),
     new WebpackBar({
       color: '#52c41a',
     }),
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.tsx', '.ts', '.json'],
+    extensions: ['.tsx', '.ts', '.js', '.json'],
     alias: { 'react-dom': '@hot-loader/react-dom' },
   },
 }
