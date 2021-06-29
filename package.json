@@ -64,7 +64,7 @@
     "webpackbar": "^5.0.0-3"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": [
+    "src/**/*.{js,jsx}": [
       "eslint --fix",
       "prettier --write"
     ]

@@ -111,7 +111,7 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.tsx', '.ts', '.json'],
+    extensions: ['.js', '.jsx', '.json'],
     alias: { 'react-dom': '@hot-loader/react-dom' },
   },
 }
