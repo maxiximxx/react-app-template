@@ -68,8 +68,11 @@ const checkStatus = async (response: AxiosResponse) => {
   return false
 }
 
+interface reqProps {
+  [key: string]: any
+}
 export default class http {
-  static post(url: string, data?: object) {
+  static post(url: string, data?: reqProps) {
     return axios({
       method: 'post',
       url,
@@ -78,7 +81,7 @@ export default class http {
     }).then((response) => checkStatus(response))
   }
 
-  static get(url: string, params?: object) {
+  static get(url: string, params?: reqProps) {
     return axios({
       method: 'get',
       url,
