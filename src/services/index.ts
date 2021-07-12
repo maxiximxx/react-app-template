@@ -1,5 +1,5 @@
-import { routePath } from '../config/config'
-import http from './http'
+import { routePath } from '../common/config/config'
+import http from '../utils/http'
 
 export const baseUrl = `${routePath}/api`
 
