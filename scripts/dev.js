@@ -22,6 +22,7 @@ const dev = {
     hot: true,
     historyApiFallback: true,
     host: HOST,
+    port: PORT,
   },
 }
 
@@ -29,6 +30,7 @@ module.exports = new Promise((resolve) => {
   portfinder
     .getPortPromise()
     .then((port) => {
+      const config = merge(common, dev)
       if (port !== PORT) {
         const errorMessage = `Something is already running on port ${PORT}.`
         const changePortMessage = 'Would you like to run the app on another port instead?'
@@ -40,11 +42,12 @@ module.exports = new Promise((resolve) => {
         }
         prompts(question).then((answer) => {
           if (answer.shouldChangePort) {
-            dev.devServer.port = port
-            const config = merge(common, dev)
+            config.devServer.port = port
             resolve(config)
           }
         })
+      } else {
+        resolve(config)
       }
     })
     .catch((err) => {
