@@ -7,12 +7,16 @@ import store from './store/index'
 import Routes from './routes'
 import './common/stylus/index.styl'
 
-const App = () => (
-  <BrowserRouter basename="/">
-    <Provider store={store}>
-      <Routes />
-    </Provider>
-  </BrowserRouter>
-)
+function App() {
+  return (
+    <React.StrictMode>
+      <BrowserRouter basename="/">
+        <Provider store={store}>
+          <Routes />
+        </Provider>
+      </BrowserRouter>
+    </React.StrictMode>
+  )
+}
 
 ReactDOM.render(<App />, document.getElementById('app'))

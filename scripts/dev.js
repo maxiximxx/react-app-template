@@ -1,4 +1,4 @@
-const webpack = require('webpack')
+// const webpack = require('webpack')
 const portfinder = require('portfinder')
 const chalk = require('chalk')
 const prompts = require('prompts')
@@ -15,7 +15,7 @@ const dev = {
   output: {
     filename: 'js/[name].js',
   },
-  plugins: [new webpack.HotModuleReplacementPlugin({})],
+  // plugins: [new webpack.HotModuleReplacementPlugin({})],
   devServer: {
     compress: true,
     open: true,
