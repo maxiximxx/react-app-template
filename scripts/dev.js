@@ -1,4 +1,4 @@
-// const webpack = require('webpack')
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const portfinder = require('portfinder')
 const chalk = require('chalk')
 const prompts = require('prompts')
@@ -15,7 +15,11 @@ const dev = {
   output: {
     filename: 'js/[name].js',
   },
-  // plugins: [new webpack.HotModuleReplacementPlugin({})],
+  plugins: [
+    new ReactRefreshWebpackPlugin({
+      overlay: false,
+    }),
+  ],
   devServer: {
     compress: true,
     open: true,
@@ -23,6 +27,9 @@ const dev = {
     historyApiFallback: true,
     host: HOST,
     port: PORT,
+    client: {
+      logging: 'error'
+    }
   },
 }
 

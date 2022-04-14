@@ -6,10 +6,10 @@ const ESLintPlugin = require('eslint-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 
-const { PROJECT_PATH } = require('./config')
+const { PROJECT_PATH, BUILD_PATH } = require('./config')
 const { isDevelopment } = require('./env')
 
-const getCssLoaders = () => {
+const getCssLoaders = (useCssModules = true) => {
   const cssLoaders = [
     isDevelopment
       ? 'style-loader'
@@ -22,9 +22,11 @@ const getCssLoaders = () => {
     {
       loader: 'css-loader',
       options: {
-        modules: {
-          localIdentName: '[local]--[hash:base64:5]',
-        },
+        modules: useCssModules
+          ? {
+              localIdentName: '[local]--[hash:base64:5]',
+            }
+          : false,
         sourceMap: isDevelopment,
       },
     },
@@ -37,7 +39,7 @@ const getCssLoaders = () => {
               'postcss-preset-env',
               {
                 autoprefixer: {
-                  grid: true,
+                  grid: false,
                 },
               },
             ],
@@ -54,17 +56,18 @@ module.exports = {
     main: './src/main.tsx',
   },
   output: {
-    path: path.resolve(PROJECT_PATH, './app'),
+    path: path.resolve(PROJECT_PATH, BUILD_PATH),
   },
   module: {
     rules: [
       {
-        test: /\.(tsx?|js?)$/,
+        test: /\.(tsx?|js)$/,
         exclude: /node_modules/,
         use: [
           {
             loader: 'babel-loader',
             options: {
+              plugins: [isDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
               cacheDirectory: true,
             },
           },
@@ -95,7 +98,7 @@ module.exports = {
       patterns: [
         {
           from: path.resolve(PROJECT_PATH, './public'),
-          to: path.resolve(PROJECT_PATH, './app/public'),
+          to: path.resolve(PROJECT_PATH, './build/public'),
           globOptions: {
             dot: true,
             gitignore: true,
@@ -123,6 +126,5 @@ module.exports = {
   ],
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.json'],
-    alias: { 'react-dom': '@hot-loader/react-dom' },
   },
 }

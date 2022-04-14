@@ -1,4 +1,3 @@
-import { hot } from 'react-hot-loader/root'
 import React from 'react'
 import { useRoutes, RouteObject } from 'react-router-dom'
 
@@ -22,4 +21,4 @@ function RootRoutes() {
   return element
 }
 
-export default hot(RootRoutes)
+export default RootRoutes
