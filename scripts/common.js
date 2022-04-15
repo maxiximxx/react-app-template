@@ -1,62 +1,14 @@
-const path = require('path')
 const WebpackBar = require('webpackbar')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ESLintPlugin = require('eslint-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
-const CopyPlugin = require('copy-webpack-plugin')
 
-const { PROJECT_PATH, BUILD_PATH } = require('./config')
 const { isDevelopment } = require('./env')
-
-const getCssLoaders = (useCssModules = true) => {
-  const cssLoaders = [
-    isDevelopment
-      ? 'style-loader'
-      : {
-          loader: MiniCssExtractPlugin.loader,
-          options: {
-            publicPath: '../',
-          },
-        },
-    {
-      loader: 'css-loader',
-      options: {
-        modules: useCssModules
-          ? {
-              localIdentName: '[local]--[hash:base64:5]',
-            }
-          : false,
-        sourceMap: isDevelopment,
-      },
-    },
-    {
-      loader: 'postcss-loader',
-      options: {
-        postcssOptions: {
-          plugins: [
-            [
-              'postcss-preset-env',
-              {
-                autoprefixer: {
-                  grid: false,
-                },
-              },
-            ],
-          ],
-        },
-      },
-    },
-  ]
-  return cssLoaders
-}
+const { resolvePath, getCssLoaders } = require('./utils')
 
 module.exports = {
   entry: {
     main: './src/main.tsx',
-  },
-  output: {
-    path: path.resolve(PROJECT_PATH, BUILD_PATH),
   },
   module: {
     rules: [
@@ -92,27 +44,14 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(PROJECT_PATH, './public/index.html'),
-    }),
-    new CopyPlugin({
-      patterns: [
-        {
-          from: path.resolve(PROJECT_PATH, './public'),
-          to: path.resolve(PROJECT_PATH, './build/public'),
-          globOptions: {
-            dot: true,
-            gitignore: true,
-            ignore: ['**/index.html'],
-          },
-        },
-      ],
+      template: resolvePath('public/index.html'),
     }),
     new ESLintPlugin({
       extensions: ['tsx', 'ts', 'js'],
     }),
     new ForkTsCheckerWebpackPlugin({
       typescript: {
-        configFile: path.resolve(PROJECT_PATH, './tsconfig.json'),
+        configFile: resolvePath('tsconfig.json'),
         diagnosticOptions: {
           semantic: true,
           syntactic: true,

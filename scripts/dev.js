@@ -6,6 +6,7 @@ const { merge } = require('webpack-merge')
 
 const common = require('./common')
 const { HOST, PORT } = require('./config')
+const { resolvePath } = require('./utils')
 
 portfinder.basePort = PORT
 
@@ -21,6 +22,9 @@ const dev = {
     }),
   ],
   devServer: {
+    static: {
+      directory: resolvePath(''),
+    },
     compress: true,
     open: true,
     hot: true,
