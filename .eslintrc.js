@@ -17,7 +17,6 @@ module.exports = {
   rules: {
     'import/no-extraneous-dependencies': 0,
     'no-console': 0,
-    'no-use-before-define': 0,
     'react/jsx-filename-extension': 0,
     'react/button-has-type': 0,
     'no-unused-expressions': [2, { allowShortCircuit: true }],
@@ -36,8 +35,9 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
-      node: {
-        extensions: ['.ts', '.tsx', '.js', '.jsx'],
+      alias: {
+        map: [['@', './src']],
+        extensions: ['.tsx', '.ts', '.js'],
       },
     },
   },
