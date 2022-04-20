@@ -15,6 +15,7 @@ module.exports = {
   },
   plugins: ['react', 'react-hooks', '@typescript-eslint'],
   rules: {
+    'no-use-before-define': 0,
     'import/no-extraneous-dependencies': 0,
     'no-console': 0,
     'react/jsx-filename-extension': 0,
