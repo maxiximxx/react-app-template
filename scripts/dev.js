@@ -23,7 +23,8 @@ const dev = {
   ],
   devServer: {
     static: {
-      directory: resolvePath(''),
+      directory: resolvePath('public'),
+      publicPath: '/public'
     },
     compress: true,
     open: true,
