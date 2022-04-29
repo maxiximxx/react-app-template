@@ -1,24 +1,18 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import eslint from '@rollup/plugin-eslint'
-// import legacy from '@vitejs/plugin-legacy'
-
+import checker from 'vite-plugin-checker'
 import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    {
-      ...eslint({
-        throwOnError: true,
-        include: [/\.tsx?/, /\.js/],
-      }),
-      enforce: 'pre',
-    },
+    checker({
+      typescript: true,
+      eslint: {
+        lintCommand: 'eslint "./src/**/*.{tsx,ts,js}"',
+      },
+    }),
     react(),
-    // legacy({
-    //   targets: ['defaults', 'not IE 11'],
-    // }),
   ],
   resolve: {
     alias: {
